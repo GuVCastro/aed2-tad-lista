@@ -1,5 +1,5 @@
 /*****************************************************************************************
- * NOME DO ARQUIVO: lista.c 
+ * NOME DO ARQUIVO: lista-links.c 
  * 
  * AUTOR: Gustavo Valadares Castro
  *
