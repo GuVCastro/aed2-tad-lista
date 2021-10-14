@@ -151,6 +151,7 @@ int main(void)
 	char nome[TAM_NOMES] = "", novoNome[TAM_NOMES] = "", novoLink[TAM_LINKS] = "";
 
 	int opcao = -1;
+
 	while(opcao != 0) {
 		printf("*****************************************\n");
 		printf("[1] Mostrar lista\n");
