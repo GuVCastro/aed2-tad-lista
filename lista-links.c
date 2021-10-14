@@ -23,9 +23,13 @@
 #define TAM_LINKS 25
 #define TAM_LISTA 20
 
-typedef struct	Lista {
+typedef struct Item {
 	char **nomes;
 	char **links;
+} Item;
+
+typedef struct Lista {
+	Item itens;
 	int n;
 	int MAX;
 } Lista;
@@ -33,12 +37,12 @@ typedef struct	Lista {
 void newLista(Lista *l, int tamanhoLista)
 {
 	l->MAX = tamanhoLista;
-	l->nomes = malloc(tamanhoLista * sizeof(char*));
-	l->links = malloc(tamanhoLista * sizeof(char*));
+	l->itens.nomes = malloc(tamanhoLista * sizeof(char*));
+	l->itens.links = malloc(tamanhoLista * sizeof(char*));
 	
 	for (int i = 0; i < tamanhoLista; i++) {
-		l->nomes[i] = malloc(TAM_NOMES * sizeof(char));
-		l->links[i] = malloc(TAM_LINKS * sizeof(char));
+		l->itens.nomes[i] = malloc(TAM_NOMES * sizeof(char));
+		l->itens.links[i] = malloc(TAM_LINKS * sizeof(char));
 	}
 
 	l->n = 0;
@@ -49,8 +53,8 @@ void inserir(Lista *l, char *novoNome, char *novoLink)
 	if (l->n >= l->MAX)
 		exit(1);
 
-	strcpy(l->nomes[l->n], novoNome);
-	strcpy(l->links[l->n], novoLink);
+	strcpy(l->itens.nomes[l->n], novoNome);
+	strcpy(l->itens.links[l->n], novoLink);
 	l->n++;
 }
 
@@ -62,19 +66,22 @@ void inserirPadroes(Lista *l, char **nomes, char **links)
 
 void remover(Lista *l, char *nome)
 {
-	int pos;
+	int pos = -1;
 	for (int i = 0; i < l->n; i++) {
-		if (strcmp(l->nomes[i], nome) == 0) {
+		if (strcmp(l->itens.nomes[i], nome) == 0) {
 			pos = i;
 			break;
 		}
 	}
 
-	l->n--;
-
-	for (int i = pos; i < l->n; i++) {
-		strcpy(l->nomes[i], l->nomes[i + 1]);
-		strcpy(l->links[i], l->links[i + 1]);
+	if (pos == -1)
+		printf("\nNOME NAO ENCONTRADO\n\n");
+	else {
+		l->n--;
+		for (int i = pos; i < l->n; i++) {
+			strcpy(l->itens.nomes[i], l->itens.nomes[i + 1]);
+			strcpy(l->itens.links[i], l->itens.links[i + 1]);
+		}
 	}
 }
 
@@ -82,7 +89,7 @@ void mostrarNomes(Lista *l)
 {
 	printf("Nomes: \n");
 	for (int i = 0; i < l->n; i++) {
-		printf("{ %s }\n", l->nomes[i]);
+		printf("{ %s }\n", l->itens.nomes[i]);
 	}
 	printf("\n");
 }
@@ -93,7 +100,7 @@ void pesquisar(Lista *l, char *nome)
 	char auxNomes[TAM_NOMES], auxLinks[TAM_LINKS];
 
 	for (int i = 0; i < l->n; i++) {
-		if (strcmp(l->nomes[i], nome) == 0) {
+		if (strcmp(l->itens.nomes[i], nome) == 0) {
 			pos = i;
 			break;		
 		}
@@ -102,18 +109,18 @@ void pesquisar(Lista *l, char *nome)
 	if (pos == -1)
 		printf("\nResultado: NAO ENCONTRADO\n\n");
 	else {
-		printf("\nResultado: { %s, %s }\n\n", l->nomes[pos], l->links[pos]);
+		printf("\nResultado: { %s, %s }\n\n", l->itens.nomes[pos], l->itens.links[pos]);
 		
-		strcpy(auxNomes, l->nomes[pos]);
-		strcpy(auxLinks, l->links[pos]);
+		strcpy(auxNomes, l->itens.nomes[pos]);
+		strcpy(auxLinks, l->itens.links[pos]);
 
 		for (int i = pos; i > 0; i--) {
-			strcpy(l->nomes[i], l->nomes[i - 1]);
-			strcpy(l->links[i], l->links[i - 1]);
+			strcpy(l->itens.nomes[i], l->itens.nomes[i - 1]);
+			strcpy(l->itens.links[i], l->itens.links[i - 1]);
 		}
 		
-		strcpy(l->nomes[0], auxNomes);
-		strcpy(l->links[0], auxLinks);
+		strcpy(l->itens.nomes[0], auxNomes);
+		strcpy(l->itens.links[0], auxLinks);
 	}
 }
 
@@ -148,7 +155,7 @@ int main(void)
 	};
 	inserirPadroes(&l, nomesPadrao, linksPadrao);
 	
-	char nome[TAM_NOMES] = "", novoNome[TAM_NOMES] = "", novoLink[TAM_LINKS] = "";
+	char nome[TAM_NOMES], novoNome[TAM_NOMES], novoLink[TAM_LINKS];
 
 	int opcao = -1;
 
