@@ -6,6 +6,10 @@
  * DESCRIÇÃO:	Programa cria uma lista com nomes e URLs e permite pesquisa e edição de 
  *				seus elementos.
  *
+ * OBSERVAÇÕES:
+ *				Repositório: http://git@github.com:GuVCastro/aed2-tad-lista.git 
+ *				Compilador: gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0 
+ *
  * MUDANÇAS:
  *				DATA		AUTOR	DETALHES
  *				2021/10/14	Gustavo	Programa completo
