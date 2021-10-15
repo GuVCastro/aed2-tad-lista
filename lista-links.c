@@ -7,7 +7,7 @@
  *				seus elementos.
  *
  * OBSERVAÇÕES:
- *				Repositório: http://git@github.com:GuVCastro/aed2-tad-lista.git 
+ *				Repositório: https://github.com/GuVCastro/aed2-tad-lista
  *				Compilador: gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0 
  *
  * MUDANÇAS:
