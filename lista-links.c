@@ -213,6 +213,9 @@ int main(void)
 		}
 	}
 
+	free(l.itens.nomes);
+	free(l.itens.links);
+
 	return 0;
 }
 
