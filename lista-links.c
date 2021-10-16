@@ -94,7 +94,7 @@ void mostrarNomes(Lista *l)
 	printf("\n");
 }
 
-void pesquisar(Lista *l, char *nome)
+int pesquisar(Lista *l, char *nome)
 {
 	int pos = -1;
 	char auxNomes[TAM_NOMES], auxLinks[TAM_LINKS];
@@ -106,10 +106,12 @@ void pesquisar(Lista *l, char *nome)
 		}
 	}
 
-	if (pos == -1)
+	if (pos == -1) {
 		printf("\nResultado: NAO ENCONTRADO\n\n");
+		return l->n;
+	}
 	else {
-		printf("\nResultado: { %s, %s }\n\n", l->itens.nomes[pos], l->itens.links[pos]);
+		printf("\nResultado: { %s, %s }\n", l->itens.nomes[pos], l->itens.links[pos]);
 		
 		strcpy(auxNomes, l->itens.nomes[pos]);
 		strcpy(auxLinks, l->itens.links[pos]);
@@ -121,6 +123,8 @@ void pesquisar(Lista *l, char *nome)
 		
 		strcpy(l->itens.nomes[0], auxNomes);
 		strcpy(l->itens.links[0], auxLinks);
+
+		return pos + 1;
 	}
 }
 
@@ -156,6 +160,7 @@ int main(void)
 	inserirPadroes(&l, nomesPadrao, linksPadrao);
 	
 	char nome[TAM_NOMES], novoNome[TAM_NOMES], novoLink[TAM_LINKS];
+	int sitesVisitados;
 
 	int opcao = -1;
 
@@ -186,7 +191,8 @@ int main(void)
 				mostrarNomes(&l);
 				printf("Insira o nome: ");
 				scanf(" %[^\n]%*c", nome);
-				pesquisar(&l, nome);
+				sitesVisitados = pesquisar(&l, nome);
+				printf("Enderecos Visitados: %i\n\n", sitesVisitados);
 				mostrarNomes(&l);
 				break;
 			
